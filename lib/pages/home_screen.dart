@@ -21,11 +21,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   var currentIndex = 0;
   List<Tab> myTabs = [
-    Tab(
+    const Tab(
       icon: Icon(Icons.home_outlined),
       text: "Home",
     ),
-    Tab(
+    const Tab(
+      icon: Icon(Icons.message),
+      text: "Chat",
+    ),
+    const Tab(
+      icon: Icon(Icons.shop),
+      text: "Order",
+    ),
+    const Tab(
       icon: Icon(Icons.settings),
       text: "Profile",
     ),
@@ -52,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsetsDirectional.only(start: 10, end: 10),
+        padding: const EdgeInsetsDirectional.only(start: 10, end: 10),
         child: Stack(
           children: [
             PositionedDirectional(
@@ -65,11 +73,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Row(
                       children: [
                         Container(
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
+                          decoration: const BoxDecoration(
+                              //color: Colors.purple,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          padding: EdgeInsetsDirectional.all(3),
+                          padding: const EdgeInsetsDirectional.all(3),
                           height: 40,
                           width: 40,
                           child: Image.asset(
@@ -77,13 +85,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(width: 15),
-                        Text(
+                        const SizedBox(width: 15),
+                        const Text(
                           "Welcome in Book App",
                           style: TextStyle(
                               fontSize: 22,
                               color: Colors.purple,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.w500),
                         )
                       ],
                     ),
@@ -92,14 +100,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         IconButton(
                             splashRadius: 1,
                             onPressed: () {},
-                            icon: Icon(
-                              Icons.ring_volume_rounded,
+                            icon: const Icon(
+                              Icons.menu,
                               color: Colors.purple,
                             )),
-                        IconButton(
-                            splashRadius: 1,
-                            onPressed: () {},
-                            icon: Icon(Icons.favorite, color: Colors.purple))
                       ],
                     )
                   ],
@@ -120,7 +124,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     tabController: tabController,
                     pageController: _pageController,
                   ),
-                  ProfileScreen(),
+                  const ProfileScreen(),
+                  const ProfileScreen(),
+                  const ProfileScreen(),
                 ],
               ),
             ),
@@ -149,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     unselectedLabelColor: Colors.black,
                     controller: tabController,
                     indicatorSize: TabBarIndicatorSize.tab,
-                    indicator: BoxDecoration(
+                    indicator: const BoxDecoration(
                       color: Colors.purple,
                     ),
                     tabs: myTabs,

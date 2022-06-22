@@ -15,22 +15,25 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.bookSelected.title),
+        title: Text(
+          widget.bookSelected.title,
+          style: const TextStyle(fontSize: 16),
+        ),
       ),
       body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             actions: [
               IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.bookmark_border,
                     color: Colors.white,
                   )),
               IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.more_horiz_sharp, color: Colors.white))
+                  icon: const Icon(Icons.more_horiz_sharp, color: Colors.white))
             ],
             backgroundColor: Colors.transparent,
             pinned: true,
@@ -41,7 +44,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_ios_new,
                   color: Colors.white,
                 )),
@@ -60,12 +63,12 @@ class _DetailScreenState extends State<DetailScreen> {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Padding(
-                  padding: EdgeInsetsDirectional.only(
+                  padding: const EdgeInsetsDirectional.only(
                       start: 20, end: 20, bottom: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       CustomRow(
@@ -74,27 +77,58 @@ class _DetailScreenState extends State<DetailScreen> {
                         'Title:',
                         widget.bookSelected.title,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       CustomRow(
                         Icons.join_inner,
                         Colors.green,
                         'Subtitle:',
                         widget.bookSelected.subtitle,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       CustomRow(
                         Icons.label,
                         Colors.purple,
                         'Price:',
                         widget.bookSelected.price,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       CustomRow(
                         Icons.location_city,
                         Colors.yellow,
                         'ISBN:',
                         widget.bookSelected.isbn13,
                       ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.green),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'Order Book',
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.red),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'Close',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 );

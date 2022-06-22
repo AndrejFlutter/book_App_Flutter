@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kniha_test_app/pages/home_screen.dart';
-import 'package:kniha_test_app/pages/navigation_home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Moja Kniznica',
+      title: 'My Book App - Andrej',
       theme: ThemeData(
-        backgroundColor: Colors.white54,
+        backgroundColor: Colors.white12,
         primarySwatch: Colors.purple,
       ),
       home: const HomeScreen(),

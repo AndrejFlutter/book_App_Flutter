@@ -33,9 +33,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   void initState() {
-    super.initState();
-
     starting();
+    super.initState();
   }
 
   @override
@@ -99,18 +98,27 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsetsDirectional.only(
               bottom: MediaQuery.of(context).size.height * .09 + 10),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             SearchWidget(
                 text: query,
                 hintText: 'Here enter your Book Name',
                 onChanged: searchBook),
-            SizedBox(height: 35),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Filtered Books:',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple.shade300),
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
@@ -119,7 +127,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
                 itemCount: books.length,
                 itemBuilder: (context, index) {
                   if (isLoading == true) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: const CircularProgressIndicator());
                   }
                   {
                     return SizedBox(
@@ -198,7 +207,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
                                           child: Text(
                                             ' ${books[index].price}',
                                             softWrap: true,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 18.0,
                                                 color: Colors.yellow,
                                                 fontWeight: FontWeight.w500),
@@ -230,7 +239,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
                                                     ),
                                                   );
                                                 },
-                                                child: Text(
+                                                child: const Text(
                                                   'Detail',
                                                   style: TextStyle(
                                                       fontSize: 20.0,
@@ -247,7 +256,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
                                   ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -256,7 +265,13 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
                 },
               ),
             ),
-            SizedBox(height: 15),
+            Text(
+              'New Books:',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple.shade300),
+            ),
           ]),
         ),
       ),
