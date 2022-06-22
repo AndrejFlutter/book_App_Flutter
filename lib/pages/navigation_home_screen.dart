@@ -29,6 +29,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   String query = '';
   Timer? debouncer;
   TextEditingController _mySearchController = TextEditingController();
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -58,7 +59,10 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     _mySearchController.text = 'mongodb';
     final books = await RemoteService.fetchBooks(_mySearchController.text);
 
-    setState(() => this.books = books);
+    setState(() {
+      this.books = books;
+      isLoading = false;
+    });
   }
 
   void onChipTap(int index) {
@@ -102,16 +106,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: 15),
-
             SearchWidget(
                 text: query,
                 hintText: 'Here enter your Book Name',
                 onChanged: searchBook),
-
-            //    ),
             SizedBox(height: 35),
-
-            // SizedBox(height: 15),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
@@ -119,103 +118,141 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: books.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 10),
-                    child: SizedBox(
+                  if (isLoading == true) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  {
+                    return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.4,
                       width: MediaQuery.of(context).size.width * 0.6,
-                      child: Stack(
-                        children: [
-                          GestureDetector(
-                            onTap: () {},
-                            child: Hero(
-                              tag: '$index',
-                              child: Container(
-                                height: 400,
-                                child: Image.network(
-                                  books[index].image,
-                                  fit: BoxFit.fitHeight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Stack(
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: Hero(
+                                tag: '${books[index].title}',
+                                child: Container(
+                                  width: 350,
+                                  height: 650,
+                                  color: Colors.white54,
+                                  child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Image.network(books[index].image),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          PositionedDirectional(
-                              top: 20,
-                              end: 20,
-                              child: Container(
-                                padding: const EdgeInsetsDirectional.only(
-                                    start: 10, end: 10, top: 5, bottom: 5),
-                                decoration: BoxDecoration(
-                                    color: Colors.yellow,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.purple,
-                                      size: 15,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text('4.8')
-                                  ],
-                                ),
-                              )),
-                          PositionedDirectional(
-                            bottom: -10,
-                            end: 50,
-                            start: 40,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
+                            PositionedDirectional(
+                                top: 10,
+                                end: 10,
+                                child: Container(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      start: 10, end: 10, top: 5, bottom: 5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.purple,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                        size: 18,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '4.8',
+                                        style: TextStyle(
+                                            fontSize: 18, color: Colors.yellow),
+                                      )
+                                    ],
+                                  ),
+                                )),
+                            PositionedDirectional(
+                              bottom: 25,
+                              end: 30,
+                              start: 20,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          ' ${books[index].price}',
-                                          softWrap: true,
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold),
+                                        Container(
+                                          width: 75,
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 5, top: 5, bottom: 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.purple,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Text(
+                                            ' ${books[index].price}',
+                                            softWrap: true,
+                                            style: TextStyle(
+                                                fontSize: 18.0,
+                                                color: Colors.yellow,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 70,
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  start: 10, top: 5, bottom: 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.purple,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DetailScreen(
+                                                              bookSelected:
+                                                                  books[index]),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text(
+                                                  'Detail',
+                                                  style: TextStyle(
+                                                      fontSize: 20.0,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.yellow),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        //Navigator.push(context)DetailPage('sss'));
-
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailScreen(
-                                                      bookSelected:
-                                                          books[index])),
-                                        );
-                                      },
-                                      child: Text(
-                                        'Detail',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
               ),
             ),

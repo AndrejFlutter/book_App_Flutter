@@ -14,43 +14,70 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Informacie o knihe"),
+        title: Text(widget.bookSelected.title),
       ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
-            actions: [
-              IconButton(
-                  onPressed: () {},
+              actions: [
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.bookmark_border,
+                      color: Colors.white,
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.more_horiz_sharp, color: Colors.white))
+              ],
+              backgroundColor: Colors.transparent,
+              pinned: true,
+              snap: true,
+              floating: true,
+              expandedHeight: 390.0,
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   icon: Icon(
-                    Icons.bookmark_border,
+                    Icons.arrow_back_ios_new,
                     color: Colors.white,
                   )),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.more_horiz_sharp, color: Colors.white))
-            ],
-            backgroundColor: Colors.transparent,
-            pinned: true,
-            snap: true,
-            floating: true,
-            expandedHeight: 300.0,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.white,
-                )),
+              flexibleSpace: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: Image.network(
+                      widget.bookSelected.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              )),
+/* 
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
-                tag: '99',
-                child: Image.network(widget.bookSelected.image),
+                tag: '${widget.bookSelected.title}',
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        // width: 400,
+                        height: 250,
+                        child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Image.network(
+                            widget.bookSelected.image,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
+            ), */
+          //  ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -60,6 +87,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 20,
+                      ),
                       CustomRow(
                         Icons.title_sharp,
                         Colors.red,
@@ -72,13 +102,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         Colors.green,
                         'Subtitle:',
                         widget.bookSelected.subtitle,
-                      ),
-                      SizedBox(height: 20),
-                      CustomRow(
-                        Icons.mail,
-                        Colors.blue,
-                        'Url:',
-                        widget.bookSelected.url,
                       ),
                       SizedBox(height: 20),
                       CustomRow(
@@ -108,45 +131,45 @@ class _DetailScreenState extends State<DetailScreen> {
 
   Widget CustomRow(
       IconData myIcon, Color myColor, String myText1, String myText2) {
-    return Row(
-      //mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Icon(myIcon, color: myColor),
-        SizedBox(
-          width: 10,
+    return Container(
+        height: 150,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          border: Border.all(color: Colors.black26),
         ),
-        Flexible(
-          flex: 1,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+            //mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                myText1,
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Icon(myIcon, color: myColor),
+              ]),
+              SizedBox(
+                width: 5,
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 30,
-        ),
-        Flexible(
-          flex: 4,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                myText2,
-                softWrap: true,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(
+                  myText1,
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                 ),
-              )
-            ],
-          ),
-        )
-      ],
-    );
+              ]),
+              SizedBox(
+                width: 20,
+              ),
+              Flexible(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        myText2,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                        ),
+                      )
+                    ]),
+              ),
+            ]));
   }
 }
