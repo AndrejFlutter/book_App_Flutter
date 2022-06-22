@@ -21,8 +21,8 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final styleActive = TextStyle(color: Colors.black);
-    final styleHint = TextStyle(color: Colors.black54);
+    final styleActive = TextStyle(color: Colors.purple);
+    final styleHint = TextStyle(color: Colors.purple);
     final style = widget.text.isEmpty ? styleHint : styleActive;
 
     return Container(
@@ -31,7 +31,7 @@ class _SearchWidgetState extends State<SearchWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
-        border: Border.all(color: Colors.black26),
+        border: Border.all(color: Colors.purple),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
