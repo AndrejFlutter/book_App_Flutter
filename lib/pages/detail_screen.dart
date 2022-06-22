@@ -121,7 +121,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.red),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                             child: const Text(
                               'Close',
                               style: const TextStyle(fontSize: 18),
